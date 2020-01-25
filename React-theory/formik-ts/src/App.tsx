@@ -80,7 +80,7 @@ const App: React.FC = () => {
 
             <div>
               Для создания данной учебной формы были использованы следующие пакеты: <br />
-              <strong> 'formik', 'yup', '@material-ui/core', '@material-ui/icons' </strong> <br /><br />
+              <strong> 'formik', 'yup', '@material-ui/core' </strong> <br /><br />
             </div>
 
             <MyTextField placeholder='Имя' name='firstName' />

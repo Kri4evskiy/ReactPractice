@@ -43,8 +43,8 @@ const Component4 = ({ dec, inc, count }) => (
     </div>
 )
 
-const INC = 'INC' // actionTypes.js
-const DEC = 'DEC' // actionTypes.js
+const INC = 'INC' // --------- actionTypes.js
+const DEC = 'DEC' // --------- actionTypes.js
 
 const inc = () => ({ type: INC }) //actions.js
 const dec = () => ({ type: DEC }) //actions.js
@@ -59,11 +59,11 @@ const reducer = (state = { count: 0 }, action) => {  // ----------- reducer.js (
     }
 }
 
-const store = createStore(reducer)
+const store = createStore(reducer)  // -------- если бы было много редюсеров - создать {combineReducer}
 
 const setStateToProps = (state) => ({ count: state.count })
 
-const setDispatchToProps = (dispatch) => ({
+const setDispatchToProps = (dispatch) => ({ // bindActionCreators ({inc, dec}, dispatch) }) --- упрощённый синтаксис, или { dec, inc }
     inc: () => dispatch(inc()),
     dec: () => dispatch(dec())
 })
