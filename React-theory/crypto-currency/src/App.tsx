@@ -149,7 +149,7 @@ function App() {
                 </FormControl>
               </div>
               <Typography variant="h5" component="h5">
-                9 227,17 Доллар
+                9 227,17 Доллар США
               </Typography>
             </Paper>
           </Grid>
