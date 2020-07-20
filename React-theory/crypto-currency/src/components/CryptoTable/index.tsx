@@ -1,6 +1,6 @@
 import React from "react";
 import { observer, inject } from "mobx-react";
-import CurrenciesStore from '../../stores/currenciesStore'
+import CurrenciesStore from "../../stores/currenciesStore";
 
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -10,27 +10,32 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
-import { TCoin } from "../../types";
+import { TCoin, TCoinDiff } from "../../types";
 
 type ICryptoTable = {
   classes: any;
-  currenciesStore?: CurrenciesStore
+  currenciesStore?: CurrenciesStore;
 };
 
-const CryptoTable = inject('currenciesStore')(
-    observer(({classes, currenciesStore}: ICryptoTable) => {
-      const items: TCoin[] = currenciesStore!.getItems || [];
-      
-      React.useEffect(() => {
-        if (currenciesStore) {
-          currenciesStore.fetchCoins();
-        }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [] );
+const CryptoTable = inject("currenciesStore")(
+  observer(({ classes, currenciesStore }: ICryptoTable) => {
+    const items: TCoin[] = currenciesStore!.getItems || [];
+    const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
 
-      return (
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
+    React.useEffect(() => {
+      if (currenciesStore) {
+        currenciesStore.fetchCoins();
+        setInterval(() => {
+          currenciesStore.fetchCoins()
+        }, 30 * 1000)
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
@@ -41,29 +46,37 @@ const CryptoTable = inject('currenciesStore')(
             </TableRow>
           </TableHead>
 
-            <TableBody>
-              {!items.length
-                ? "Загрузка..."
-                : items.map((coin) => (
-                    <TableRow key={coin.name}>
-                      <TableCell>
-                        <img
-                          className={classes.currencyIcon}
-                          src={coin.imageUrl}
-                          alt="Coin icon"
-                        />
-                      </TableCell>
-                      <TableCell align="left">{coin.name}</TableCell>
-                      <TableCell align="left">{coin.fullName}</TableCell>
-                      <TableCell align="left">${coin.price}</TableCell>
-                      <TableCell align="left">${coin.volume25hour}</TableCell>
-                    </TableRow>
-                  ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      );
-    })
-  );
+          <TableBody>
+            {!items.length
+              ? "Загрузка..."
+              : items.map((coin) => (
+                  <TableRow key={coin.name}>
+                    <TableCell>
+                      <img
+                        className={classes.currencyIcon}
+                        src={coin.imageUrl}
+                        alt="Coin icon"
+                      />
+                    </TableCell>
+                    <TableCell align="left">{coin.name}</TableCell>
+                    <TableCell align="left">{coin.fullName}</TableCell>
+                    <TableCell
+                      className={
+                        diffObj[coin.name] &&
+                        classes[`${diffObj[coin.name]}Column`]
+                      }
+                      align="left"
+                    >
+                      ${coin.price}
+                    </TableCell>
+                    <TableCell align="left">${coin.volume25hour}</TableCell>
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  })
+);
 
 export default CryptoTable;

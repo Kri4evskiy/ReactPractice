@@ -29,7 +29,14 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 18,
       borderRadius: 30,
     },
+    redColumn: {
+      backgroundColor: "#fadada"
+    },
+    greenColumn: {
+      backgroundColor: "#d8ffc4"
+    }
   })
 );
 
 export default useStyles
+
