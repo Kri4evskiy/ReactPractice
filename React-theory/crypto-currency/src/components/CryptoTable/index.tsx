@@ -1,6 +1,7 @@
 import React from "react";
 import { observer, inject } from "mobx-react";
 import CurrenciesStore from "../../stores/currenciesStore";
+import ConverterStore from "../../stores/converterStore";
 
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -15,10 +16,11 @@ import { TCoin, TCoinDiff } from "../../types";
 type ICryptoTable = {
   classes: any;
   currenciesStore?: CurrenciesStore;
+  converterStore?: ConverterStore;
 };
 
-const CryptoTable = inject("currenciesStore")(
-  observer(({ classes, currenciesStore }: ICryptoTable) => {
+const CryptoTable = inject("currenciesStore", 'converterStore')(
+  observer(({ classes, currenciesStore, converterStore }: ICryptoTable) => {
     const items: TCoin[] = currenciesStore!.getItems || [];
     const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
 
@@ -33,9 +35,15 @@ const CryptoTable = inject("currenciesStore")(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const onClickRow = (coin: TCoin) => {
+      if (converterStore) {
+        converterStore.setSelectedCoin(coin)
+      }
+    }
+
     return (
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table stickyHeader className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
@@ -49,8 +57,8 @@ const CryptoTable = inject("currenciesStore")(
           <TableBody>
             {!items.length
               ? "Загрузка..."
-              : items.map((coin) => (
-                  <TableRow key={coin.name}>
+              : items.map((coin: TCoin) => (
+                  <TableRow onClick={() => onClickRow(coin)} hover className={classes.rowCurrency} key={coin.name}>
                     <TableCell>
                       <img
                         className={classes.currencyIcon}
