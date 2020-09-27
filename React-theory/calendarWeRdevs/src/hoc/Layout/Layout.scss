@@ -1,0 +1,14 @@
+.Layout {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.Layout main {
+    //display: flex;
+    padding: 0;
+    height: 100vh;
+}

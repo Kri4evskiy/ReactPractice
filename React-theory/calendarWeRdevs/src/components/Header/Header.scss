@@ -1,0 +1,35 @@
+.app-header {
+    width: 100%;
+    margin: 0;
+    &__logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 120px;
+        min-height: 100px;
+        img {
+            height: 70px;
+            margin-left: 60px;
+        }
+    }
+    &__list {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: 45px;
+    }
+    &__links {
+        display: flex;
+        margin: 0;
+        list-style-type: none;
+        li {
+            padding: 0 20px;
+            font-size: 20px;
+            a {
+                text-decoration: none;
+                color: #000;
+                font-weight: bold;
+            }
+        }
+    }
+}

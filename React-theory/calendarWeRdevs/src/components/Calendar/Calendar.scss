@@ -1,0 +1,123 @@
+@import "~bootstrap/scss/bootstrap";
+@import "../../styles/variables.scss";
+
+.calendar {
+    transform: translate(0, 50%);
+    background: rgb(31, 29, 29);
+    color: $text-color;
+}
+
+.calendar header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+    span {
+        margin: 0 94px;
+    }
+}
+
+.calendar header button,
+.calendar header select {
+    margin: 0 4px;
+}
+.calendar button,
+.calendar button:active,
+.calendar button:focus {
+    color: $text-color;
+    background-color: transparent;
+    outline: none;
+    border: 0;
+}
+
+.calendar tfoot th {
+    border-top: 2px solid $main-color;
+    // border-bottom: 2px solid black;
+}
+
+.calendar table {
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: auto;
+    border-top: 2px solid $main-color;
+    border-bottom: 2px solid $main-color;
+}
+
+.calendar th {
+    vertical-align: middle;
+    text-align: center;
+    height: 36px;
+}
+
+.calendar .day {
+    font-size: 15px;
+    padding: 10px 16px;
+    vertical-align: middle;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+.calendar .day:hover {
+    background-color: #332d2d;
+    cursor: pointer;
+}
+
+.calendar .day.selected {
+    border: 2px solid dodgerblue;
+}
+
+.calendar .day.today {
+    background-color: $main-color;
+    color: white;
+}
+
+.calendar .day.today:hover {
+    background-color: #0081ff;
+}
+
+.calendar .day.today.selected {
+    border: 2px solid lightgray;
+}
+
+#modal-root {
+    position: relative;
+    z-index: 999;
+}
+
+.modal__wrapper {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal__window {
+    display: block;
+    width: 330px;
+    height: 100px;
+    background-color: #fff;
+}
+.modal__header {
+    text-align: end;
+    button {
+        margin-bottom: 10px;
+        background: $main-color;
+        border: none;
+    }
+}
+.modal__body {
+    label {
+        display: inline-grid;
+        margin: 7px;
+    }
+    input {
+        width: 150px;
+        border: 2px solid $main-color;
+        text-align: center;
+    }   
+}

@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+
+.specific-col-1, .specific-col-2 {
+    padding: 0;
+}
+.specific-col-2 {
+    background-color: rgb(31, 29, 29);
+}
+
+.main-section-row {
+    min-width:100%;
+        min-height:100%;
+}
