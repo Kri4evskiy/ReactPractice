@@ -10,16 +10,22 @@ export default function Categories({ items }) {
     return (
         <div className='categories'>
             <ul>
-                <li className='active'>Все</li>
-                {items.map((item, index) => (
-                    <li
-                        className={activeItem === index ? 'active' : ''}
-                        onClick={() => onSelectItem(index)}
-                        key={`${item}_${index}`}
-                    >
-                        {item}
-                    </li>
-                ))}
+                <li
+                    className={activeItem === null ? 'active' : ''}
+                    onClick={() => onSelectItem(null)}
+                >
+                    Все
+                </li>
+                {items &&
+                    items.map((item, index) => (
+                        <li
+                            className={activeItem === index ? 'active' : ''}
+                            onClick={() => onSelectItem(index)}
+                            key={`${item}_${index}`}
+                        >
+                            {item}
+                        </li>
+                    ))}
             </ul>
         </div>
     )
