@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { Redirect, Route } from 'react-router-dom'
-import axios from 'axios'
+
 
 import { Header } from './components'
 import { Home, Cart } from './pages'
 
-import { setPizzas } from './redux/actions/actionPizzas'
+import { fetchPizzas } from './redux/actions/actionPizzas'
 
 
 function App() {
@@ -15,10 +15,8 @@ function App() {
   const dispatch = useDispatch()  
 
   useEffect(() => {
-    axios.get('http://localhost:3001/db.json').then(({ data }) => {
-      dispatch(setPizzas(data.pizzas))
-    })
-  }, [dispatch])
+    dispatch(fetchPizzas())
+  }, [])
   return (
     
     <div className="wrapper">
