@@ -9,6 +9,7 @@ function PizzaBlock({ name, imageUrl, price, types, sizes }) {
     const [activeType, setActiveType] = useState(types[0])
     const [activeSize, setActiveSize] = useState(sizes[0])
 
+
     const onSelectType = (index) => {
         setActiveType(index)
     }
@@ -80,6 +81,7 @@ PizzaBlock.propTypes = {
     price: PropTypes.number.isRequired,
     types: PropTypes.arrayOf(PropTypes.number).isRequired,
     sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
+    isLoading: PropTypes.bool,
 }
 
 export default PizzaBlock

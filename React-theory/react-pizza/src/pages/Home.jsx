@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../components'
+import LoadingBlock from '../components/PizzaBlock/LoadingBlock'
 
 import { setCategory } from '../redux/actions/actionFilters'
+import { fetchPizzas } from '../redux/actions/actionPizzas'
 
 const categoriesNames = [
     'Мясные',
@@ -21,27 +23,42 @@ const sortItems = [
 function Home() {
     const dispatch = useDispatch()
     const items = useSelector(({ pizzas }) => pizzas.items)
+    const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
 
-    const onSelecrCategory = useCallback((index) => {
-        dispatch(setCategory(index))
-    }, [dispatch])
+    useEffect(() => {
+        dispatch(fetchPizzas())
+    }, [])
+
+    const onSelectCategory = useCallback(
+        (index) => {
+            dispatch(setCategory(index))
+        },
+        [dispatch]
+    )
+
+    const pizzaBlockMaped = () => {
+        return items.map((obj) => (
+            <PizzaBlock key={obj.id} isLoading={true} {...obj} />
+        ))
+    }
 
     return (
         <div className='container'>
             <div className='content__top'>
                 <Categories
-                    onClickItem={onSelecrCategory}
+                    onClickItem={onSelectCategory}
                     items={categoriesNames}
                 />
-                <SortPopup
-                    items={sortItems}
-                />
+                <SortPopup items={sortItems} />
             </div>
             <h2 className='content__title'>Все пиццы</h2>
             <div className='content__items'>
-                {items.map((obj) => (
-                    <PizzaBlock key={obj.id} {...obj} />
-                ))}
+                {
+                isLoaded 
+                ? pizzaBlockMaped()
+                : Array(12).fill(<LoadingBlock />)
+            }
+                
             </div>
         </div>
     )
