@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+
+import uuid from 'react-uuid'
+
 import { Categories, SortPopup, PizzaBlock } from '../components'
 import LoadingBlock from '../components/PizzaBlock/LoadingBlock'
 
@@ -24,10 +27,11 @@ function Home() {
     const dispatch = useDispatch()
     const items = useSelector(({ pizzas }) => pizzas.items)
     const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
+    const { categories, sortBy } = useSelector(({ filters }) => filters)
 
     useEffect(() => {
         dispatch(fetchPizzas())
-    }, [])
+    }, [dispatch])
 
     const onSelectCategory = useCallback(
         (index) => {
@@ -38,14 +42,22 @@ function Home() {
 
     const pizzaBlockMaped = () => {
         return items.map((obj) => (
-            <PizzaBlock key={obj.id} isLoading={true} {...obj} />
+            <PizzaBlock key={obj.id} {...obj} />
         ))
+    }
+    const loadingBlockMaped = () => {
+        const blocks = []
+        for (let i = 0; i < 12; i++) {
+            blocks.push(<LoadingBlock key={uuid()} />)
+        }
+        return blocks.map(block => block)
     }
 
     return (
         <div className='container'>
             <div className='content__top'>
                 <Categories
+                    activeCategory={categories}
                     onClickItem={onSelectCategory}
                     items={categoriesNames}
                 />
@@ -53,12 +65,7 @@ function Home() {
             </div>
             <h2 className='content__title'>Все пиццы</h2>
             <div className='content__items'>
-                {
-                isLoaded 
-                ? pizzaBlockMaped()
-                : Array(12).fill(<LoadingBlock />)
-            }
-                
+                {isLoaded ? pizzaBlockMaped() : loadingBlockMaped()}
             </div>
         </div>
     )

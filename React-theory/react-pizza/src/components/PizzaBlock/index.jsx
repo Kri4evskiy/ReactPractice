@@ -80,8 +80,7 @@ PizzaBlock.propTypes = {
     imageUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     types: PropTypes.arrayOf(PropTypes.number).isRequired,
-    sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
-    isLoading: PropTypes.bool,
+    sizes: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
 export default PizzaBlock
