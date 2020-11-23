@@ -1,6 +1,9 @@
 const initialState = {
     categories: null,
-    sortBy: 'popular'
+    sortBy: {
+        type: 'popular',
+        order: 'desc'
+    }
 }
 
 const filtersReducer = (state = initialState, action) => {
