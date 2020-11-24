@@ -37,13 +37,13 @@ function Home() {
         (index) => {
             dispatch(setCategory(index))
         },
-        [dispatch]
+        []
     )
     const onSelectSortType = useCallback(
         (type) => {
             dispatch(setSortBy(type))
         },
-        [dispatch]
+        []
     )
 
     const pizzaBlockMaped = () => {
