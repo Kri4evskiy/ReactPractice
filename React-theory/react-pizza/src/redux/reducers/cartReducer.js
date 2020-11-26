@@ -4,26 +4,52 @@ const initialState = {
   totalCount: 0
 }
 
+const getTotalPrice = arr => arr.reduce((total, obj) => obj.price + total, 0)
+
 const filtersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_PIZZA_CART':{
+    case 'ADD_PIZZA_CART': {
+      const currentPizzaItems = !state.items[action.payload.id]
+        ? [action.payload]
+        : [...state.items[action.payload.id].items, action.payload]
+
       const newItems = {
         ...state.items,
-        [action.payload.id]: !state.items[action.payload.id]
-          ? [action.payload]
-          : [...state.items[action.payload.id], action.payload]
+        [action.payload.id]: {
+          items: currentPizzaItems,
+          totalPrice: getTotalPrice(currentPizzaItems)
+        }
       }
-      const allPizzas = [].concat.apply([], Object.values(newItems))
-      const totalPrice = allPizzas.reduce((total, obj) => obj.price + total, 0)
-      
+      const items = Object.values(newItems).map(obj => obj.items)
+      const allPizzas = [].concat.apply([], items)
+      const totalPrice = getTotalPrice(allPizzas)
+
       return {
         ...state,
         items: newItems,
         totalCount: allPizzas.length,
-        totalPrice 
+        totalPrice
       }
     }
 
+    case 'CLEAR_CART': {
+      return {
+        items: {},
+        totalPrice: 0,
+        totalCount: 0
+      }
+    }
+
+    case 'REMOVE_CART_ITEM': {
+      const newItems = {
+        ...state.items
+      }
+      delete newItems[action.payload]
+      return {
+        ...state,
+        items: newItems
+      }
+    }
     default:
       return state
   }

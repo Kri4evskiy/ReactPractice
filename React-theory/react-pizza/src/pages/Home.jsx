@@ -51,7 +51,7 @@ function Home() {
 
   const pizzaBlockMaped = () => {
     return items.map((obj) => (
-      <PizzaBlock onClickAddPizza={handleAddPizzaToCart} key={obj.id} addedCount={cartItems[obj.id] && cartItems[obj.id].length} {...obj} />
+      <PizzaBlock onClickAddPizza={handleAddPizzaToCart} key={obj.id} addedCount={cartItems[obj.id] && cartItems[obj.id].items.length} {...obj} />
     ))
   }
   const loadingBlockMaped = () => {
