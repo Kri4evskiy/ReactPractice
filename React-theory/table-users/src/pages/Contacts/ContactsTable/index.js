@@ -13,6 +13,7 @@ import { Avatar } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
 import { CopyToClipboardText } from "../../../components/CopyToClipboardText";
+import { NATIONALITIES_HUMAN_NAME } from "../../../constants/nationality";
 
 const useStyles = makeStyles({
   table: {
@@ -53,13 +54,19 @@ export const ContactsTable = ({ data }) => {
                 <Typography>{contact.dob.age} years</Typography>
               </TableCell>
               <TableCell>
-                <CopyToClipboardText text={contact.phone}></CopyToClipboardText>
+                <CopyToClipboardText text={contact.phone} />
               </TableCell>
               <TableCell>
-                <CopyToClipboardText text={contact.email}></CopyToClipboardText>
+                <CopyToClipboardText text={contact.email} />
               </TableCell>
-              <TableCell>6</TableCell>
-              <TableCell>7</TableCell>
+              <TableCell>
+                <Typography>{contact.location.country}</Typography>
+                <Typography>
+                  {contact.location.city}, {contact.location.street.name}{" "}
+                  {contact.location.street.number}
+                </Typography>
+              </TableCell>
+              <TableCell>{NATIONALITIES_HUMAN_NAME[contact.nat]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
