@@ -44,17 +44,22 @@ export const Contacts = () => {
         <Grid item xs={12}>
           {(() => {
             if (contacts.isLoading) {
-              return <CircularProgress color="secondary" />;
+              return (
+                <CircularProgress
+                  data-testid="contacts-loader"
+                  color="secondary"
+                />
+              );
             }
 
             if (contacts.isError) {
-              return <div>...error</div>;
+              return <div data-testid="contacts-error">...error</div>;
             }
             if (dataViewMode === DATA_VIEW_MODES.TABLE) {
               return <ContactsTable data={contacts.data} />;
             }
             if (dataViewMode === DATA_VIEW_MODES.GRID) {
-              return "grid";
+              return <div data-testid="contacts-grid-container">grid</div>;
             }
             return null;
           })()}
